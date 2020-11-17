@@ -1,5 +1,4 @@
 // General easy functions/methods to have.
-import { MimeTypes } from "./GoogleMimeTypes";
 
 export function getBoolean(value) {
   switch (value) {
