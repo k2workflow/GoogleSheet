@@ -1,5 +1,6 @@
 import "@k2oss/k2-broker-core";
 import { ServiceObjectDefinitions } from "./ServiceObjects";
+import { executeCell } from "./CellServiceObject";
 
 metadata = {
   systemName: "GoogleSheetJSSPBroker",
@@ -21,7 +22,8 @@ onexecute = async function ({
   schema,
 }): Promise<void> {
   switch (objectName) {
-    //TODO
+    case "Cell":
+      break;
     default:
       throw new Error("The object " + objectName + " is not supported.");
   }
