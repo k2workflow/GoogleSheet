@@ -30,13 +30,15 @@ const MethodTypes = {
 };
 
 export const SheetMethods = {
-  getCell: "GetCell",
+  DeleteSheet: "DeleteSheet",
 };
 
 export const SheetProperties = {
-  id: "id",
-  cell: "cell",
-  value: "value",
+  SpreadSheetId: "SpreadsheetId",
+  SpreadSheetName: "SpreadSheetName",
+  FolderId: "FolderId",
+  SheetId: "SheetId",
+  SheetName: "SheetName",
 };
 
 export const CellMethods = {
@@ -58,11 +60,41 @@ export const CellProperties = {
   IsEmpty: "IsEmpty",
 };
 
-// VS Code regex to use on the table copied from github.
-// : ^\| ([A-Za-z]*) \| ([A-Za-z ]*) \| ([A-Za-z]*) \| ([a-zA-Z ,"1-9!\./]*) \|$
-// [CellProperties.$1]: { displayName: "$2", description: "$4", type: PropertyTypes.STRING, }
 export const ServiceObjectDefinitions = {
   objects: {
+    Spreadsheet: {
+      displayName: "Spreadsheet",
+      description:
+        "Represents a Google Spreadsheets and accepts operations on the Spreadsheet object.",
+      properties: {
+        [SheetProperties.SpreadSheetId]: {
+          displayName: "Spreadsheet Id",
+          description: "The google drive ID of the spreadsheet file.",
+          type: PropertyTypes.STRING,
+        },
+        [SheetProperties.SpreadSheetName]: {
+          displayName: "Spreadsheet Name",
+          description: "The name of the spreadsheet (file).",
+          type: PropertyTypes.STRING,
+        },
+        [SheetProperties.FolderId]: {
+          displayName: "Folder Id",
+          description: "The folder where this spreadsheet needs to be placed.",
+          type: PropertyTypes.STRING,
+        },
+        [SheetProperties.SheetId]: {
+          displayName: "Sheet Id",
+          description: "Unique identifier of a sheet within a spreadsheet.",
+          type: PropertyTypes.STRING,
+        },
+        [SheetProperties.SheetName]: {
+          displayName: "Sheet Name",
+          description: "Name of the sheet within a spreadsheet",
+          type: PropertyTypes.STRING,
+        },
+      },
+      methods: {},
+    },
     Cell: {
       displayName: "Cell",
       description:
