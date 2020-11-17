@@ -39,31 +39,112 @@ export const SheetProperties = {
   value: "value",
 };
 
+export const CellMethods = {
+  WriteCellValue: "WriteCellValue",
+  GetCellValue: "GetCellValue",
+};
+
+export const CellProperties = {
+  spreadsheetId: "spreadsheetId",
+  CellId: "CellId",
+  EffectiveValueBool: "EffectiveValueBool",
+  EffectiveValueString: "EffectiveValueString",
+  EffectiveValueNumber: "EffectiveValueNumber",
+  EffectiveValueFormula: "EffectiveValueFormula",
+  EffectiveValueDateTime: "EffectiveValueDateTime",
+  EffectiveValueDate: "EffectiveValueDate",
+  EffectiveValueTime: "EffectiveValueTime",
+  FormattedValue: "FormattedValue",
+  IsEmpty: "IsEmpty",
+};
+
+// VS Code regex to use on the table copied from github.
+// : ^\| ([A-Za-z]*) \| ([A-Za-z ]*) \| ([A-Za-z]*) \| ([a-zA-Z ,"1-9!\./]*) \|$
+// [CellProperties.$1]: { displayName: "$2", description: "$4", type: PropertyTypes.STRING, }
 export const ServiceObjectDefinitions = {
   objects: {
-    Drive: {
-      displayName: "Sheet",
-      description: "Operations related to a Google (Shared) Drive",
+    Cell: {
+      displayName: "Cell",
+      description:
+        "Operations related to a single or set of Google Sheet Cell(s).",
       properties: {
-        [SheetProperties.id]: {
-          displayName: "Sheet Id",
-          description: "The ID of the sheet.",
+        [CellProperties.spreadsheetId]: {
+          displayName: "Spreadsheet Id",
+          description: "The google drive ID of the spreadsheet file.",
           type: PropertyTypes.STRING,
         },
-        [SheetProperties.cell]: {
-          displayName: "Cell",
-          description: "The cell to retrieve (eg. A1, B5, etc)",
+        [CellProperties.CellId]: {
+          displayName: "Cell Name",
+          description:
+            "The cell name, in the format 'Sheet1!A1'. Only one cell can be provided.",
           type: PropertyTypes.STRING,
+        },
+        [CellProperties.EffectiveValueBool]: {
+          displayName: "Boolean Value",
+          description:
+            "The true/false value of the field if it is a boolean cell.",
+          type: PropertyTypes.BOOL,
+        },
+        [CellProperties.EffectiveValueString]: {
+          displayName: "Text Value",
+          description: "The text value of the field if it is a text cell.",
+          type: PropertyTypes.STRING,
+        },
+        [CellProperties.EffectiveValueNumber]: {
+          displayName: "Number Value",
+          description: "The number value of the field if it is a number cell.",
+          type: PropertyTypes.NUMBER,
+        },
+        [CellProperties.EffectiveValueFormula]: {
+          displayName: "Formula Value",
+          description: "The Formula of the field if it is a formula cell.",
+          type: PropertyTypes.STRING,
+        },
+        [CellProperties.EffectiveValueDateTime]: {
+          displayName: "DateTime Value",
+          description:
+            "The date and time of the field if it is a datetime cell.",
+          type: PropertyTypes.DATETIME,
+        },
+        [CellProperties.EffectiveValueDate]: {
+          displayName: "Date Value",
+          description: "The Date of the field if it is a date cell.",
+          type: PropertyTypes.DATE,
+        },
+        [CellProperties.EffectiveValueTime]: {
+          displayName: "Time Value",
+          description: "The Time of the field if it is a time cell.",
+          type: PropertyTypes.TIME,
+        },
+        [CellProperties.FormattedValue]: {
+          displayName: "Formatted Value",
+          description: "The text representation of the cell",
+          type: PropertyTypes.STRING,
+        },
+        [CellProperties.IsEmpty]: {
+          displayName: "Is Empty",
+          description: "Indicates if the cell is empty, or could not be found.",
+          type: PropertyTypes.BOOL,
         },
       },
       methods: {
-        [SheetMethods.getCell]: {
+        [CellMethods.GetCellValue]: {
           displayName: "Get Cell Value",
-          description: "Get the value of a cell.",
-          type: MethodTypes.LIST,
-          inputs: [SheetProperties.id, SheetProperties.cell],
-          requiredInputs: [SheetProperties.id, SheetProperties.cell],
-          outputs: [SheetProperties.value],
+          description: "Read a value from a single given Cell.",
+          type: MethodTypes.READ,
+          inputs: [CellProperties.spreadsheetId, CellProperties.CellId],
+          requiredInputs: [CellProperties.spreadsheetId, CellProperties.CellId],
+          outputs: [
+            CellProperties.EffectiveValueBool,
+            CellProperties.EffectiveValueString,
+            CellProperties.EffectiveValueNumber,
+            CellProperties.EffectiveValueFormula,
+            CellProperties.EffectiveValueDateTime,
+            CellProperties.EffectiveValueDate,
+            CellProperties.EffectiveValueTime,
+            CellProperties.FormattedValue,
+            CellProperties.IsEmpty,
+          ],
         },
       },
     },
